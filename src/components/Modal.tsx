@@ -1,30 +1,37 @@
-import { useEffect, useRef, MutableRefObject } from "react";
+import React, { ReactNode, useEffect, useRef } from "react";
 import "./Modal.css";
 
-const Modal = (props: any) => {
+type ModalProp = {
+  show?: boolean;
+  setShow: React.Dispatch<React.SetStateAction<boolean>>
+  hideCloseButton?: boolean;
+  children: ReactNode;
+};
+
+const Modal = ({ show, setShow, hideCloseButton, children }: ModalProp) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
     const clickOutsideContent = (e: any) => {
       if (e.target === modalRef.current) {
-        props.setShow(false);
+        setShow(false);
       }
     };
     window.addEventListener("click", clickOutsideContent);
     return () => {
       window.removeEventListener("click", clickOutsideContent);
     };
-  }, [props]);
+  }, []);
 
   return (
-    <div ref={modalRef} className={`modal ${props.show ? "active" : ""}`}>
+    <div ref={modalRef} className={`modal ${show ? "active" : ""}`}>
       <div className="modal__content">
-        {!props.hideCloseButton && (
-          <span onClick={() => props.setShow(false)} className="modal__close">
+        {!hideCloseButton && (
+          <span onClick={() => setShow(false)} className="modal__close">
             &times;
           </span>
         )}
-        {props.children}
+        {children}
       </div>
     </div>
   );
@@ -32,14 +39,18 @@ const Modal = (props: any) => {
 
 export default Modal;
 
-export const ModalHeader = (props: any) => {
-  return <div className="modal__header">{props.children}</div>;
+type ChilderenProp = {
+  children: ReactNode;
 };
 
-export const ModalBody = (props: any) => {
-  return <div className="modal__body">{props.children}</div>;
+export const ModalHeader = ({ children }: ChilderenProp) => {
+  return <div className="modal__header">{children}</div>;
 };
 
-export const ModalFooter = (props: any) => {
-  return <div className="modal__footer">{props.children}</div>;
+export const ModalBody = ({ children }: ChilderenProp) => {
+  return <div className="modal__body">{children}</div>;
+};
+
+export const ModalFooter = ({ children }: ChilderenProp) => {
+  return <div className="modal__footer">{children}</div>;
 };

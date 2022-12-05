@@ -1,41 +1,40 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Modal, { ModalBody, ModalFooter, ModalHeader } from "./components/Modal";
-import ProductService, { ProductI } from "./services/Product.service";
+import ProductService, { Product } from "./services/Product.service";
 import StorageService from "./services/Storage.service";
 
-function App() {
-  const [newProduct, setNewProduct] = React.useState<{
-    product_name: string;
-    img_url: string;
-  }>({ product_name: "", img_url: "" });
-  const [products, setProducts] = React.useState<Array<ProductI>>([]);
-  const [newProdFile, setProdFile] = React.useState<File>();
-  const [preview, setPreview] = React.useState("");
-  const [showModal, setShowModal] = React.useState(false);
+const emptyProduct = { product_name: "", img_url: "" };
 
-  React.useEffect(() => {
+function App() {
+  const [newProduct, setNewProduct] = useState<Product>(emptyProduct);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [uploadedImage, setUploadedImage] = useState<File>();
+  const [preview, setPreview] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
     const subscribtion = ProductService.getAllProductsRealtime().subscribe(
-      (data: any) => setProducts(data)
+      (data) => setProducts(data as Product[])
     );
     return () => {
       subscribtion.unsubscribe();
     };
   }, []);
-  React.useEffect(() => {
-    if (!newProdFile) {
+
+  useEffect(() => {
+    if (!uploadedImage) {
       setPreview("");
       return;
     }
-    const objectUrl = URL.createObjectURL(newProdFile);
+    const objectUrl = URL.createObjectURL(uploadedImage);
     setPreview(objectUrl);
-    // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-  }, [newProdFile]);
+  }, [uploadedImage]);
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setProdFile(event.target.files[0]);
+      setUploadedImage(event.target.files[0]);
     }
   };
 
@@ -43,17 +42,20 @@ function App() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    const storageResponse = await StorageService.insertFile(newProdFile!);
+    const storageResponse = await StorageService.insertFile(uploadedImage!);
+
     await ProductService.addProduct({
       ...newProduct,
       img_url: storageResponse.url,
     })
-      .then((res) => setShowModal(false))
-      .catch((err) => alert(err));
-    setNewProduct({ product_name: "", img_url: "" });
+      .catch((err) => alert(err))
+      .finally(() => setShowModal(false));
+
+    setNewProduct(emptyProduct);
     setPreview("");
-    setProdFile(undefined);
+    setUploadedImage(undefined);
   };
+
   return (
     <div className="App">
       <h1>Spica Storage </h1>
@@ -65,7 +67,7 @@ function App() {
         >
           <big>+ Add New Product</big>
         </li>
-        {products?.map((product: ProductI) => (
+        {products?.map((product: Product) => (
           <li key={product._id}>
             <img
               className="product-img"
@@ -93,7 +95,7 @@ function App() {
               }
             />
             <input type="file" onChange={onFileChange} />
-            {newProdFile && preview ? (
+            {uploadedImage && preview ? (
               <img
                 alt="Not Found"
                 style={{ marginTop: "10px" }}

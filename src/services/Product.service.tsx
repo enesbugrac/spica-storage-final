@@ -1,6 +1,6 @@
 import * as Bucket from "@spica-devkit/bucket";
 
-export interface ProductI {
+export interface Product {
   product_name: string;
   img_url: string;
   _id?: string;
@@ -18,7 +18,7 @@ class ProductService {
   getProducts = () => {
     return Bucket.data.getAll(this.BUCKET_ID);
   };
-  addProduct = (object: ProductI) => {
+  addProduct = (object: Product) => {
     return Bucket.data.insert(this.BUCKET_ID, object);
   };
   getAllProductsRealtime = () => {
