@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  --color-background: hsl(216, 8%, 12%);
+  --color-blue: hsl(208, 100%, 50%);
+  --color-gray: hsl(210, 3%, 25%);
+  --color-red: hsl(7, 73%, 35%);
+  --color-white: white;
+  --border-radius: 5px;
+
+  background-color: var(--color-background);
+  color: var(--color-white);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+ul {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+button {
+  font-size: 1rem;
+  color: inherit;
+  border: none;
+  border-radius: var(--border-radius);
+}
+
+.App {
+  height: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 8px;
+}
+
+.product-list li {
+  height: 170px;
+  background: var(--color-gray);
+  flex: 1 1 calc(30% - 4px);
+  gap: 10px;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.product-input {
+  padding: 5px 8px;
+  height: 30px;
+  margin-bottom: 10px;
+  width: 90%;
+  background-color: var(--color-white);
+  border-color: transparent;
+  color: var(--color-red);
+  border-radius: var(--border-radius);
+}
+.product-input:focus {
+  outline: 2px solid var(--color-red);
+}
+.product-input::placeholder {
+  opacity: 0.8;
+  color: var(--color-background);
+}
+.submit-button {
+  background-color: var(--color-blue);
+  width: 50%;
+  height: 40px;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.product-img {
+  border-radius: 10px;
+  width: 150px;
+}
