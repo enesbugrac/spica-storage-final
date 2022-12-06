@@ -1,12 +1,12 @@
 import * as Storage from "@spica-devkit/storage";
 
 class StorageService {
-  private API_KEY = "f2bcj17lb3j394d";
+  private API_KEY = "<YOUR_API_KEY>";
 
   constructor() {
     Storage.initialize({
       apikey: this.API_KEY,
-      publicUrl: "https://master.spicaengine.com/api",
+      publicUrl: "<YOUR_API_URL>",
     });
   }
 
