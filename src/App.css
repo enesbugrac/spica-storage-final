@@ -63,14 +63,14 @@ button {
   gap: 32px;
 }
 
-.product-list {
+.product__list {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   gap: 8px;
 }
 
-.product-list li {
+.product__list li {
   height: 170px;
   background: var(--color-gray);
   flex: 1 1 calc(30% - 4px);
@@ -81,7 +81,7 @@ button {
   justify-content: center;
   align-items: center;
 }
-.product-input {
+.product__input {
   padding: 5px 8px;
   height: 30px;
   margin-bottom: 10px;
@@ -91,24 +91,25 @@ button {
   color: var(--color-red);
   border-radius: var(--border-radius);
 }
-.product-input:focus {
+.product__input:focus {
   outline: 2px solid var(--color-red);
 }
-.product-input::placeholder {
+.product__input::placeholder {
   opacity: 0.8;
   color: var(--color-background);
 }
-.submit-button {
+.submit__button {
   background-color: var(--color-blue);
   width: 50%;
   height: 40px;
 }
-.input-container {
+.input__container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.product-img {
+.product__img {
   border-radius: 10px;
   width: 150px;
+  max-height: 100px;
 }

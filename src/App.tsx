@@ -59,7 +59,7 @@ function App() {
   return (
     <div className="App">
       <h1>Spica Storage </h1>
-      <ul className="product-list">
+      <ul className="product__list">
         <li
           onClick={(e) => setShowModal(true)}
           style={{ cursor: "pointer" }}
@@ -70,7 +70,7 @@ function App() {
         {products?.map((product: Product) => (
           <li key={product._id}>
             <img
-              className="product-img"
+              className="product__img"
               src={product.img_url}
               alt={product.product_name}
             />
@@ -83,9 +83,9 @@ function App() {
           <h2>New Product</h2>
         </ModalHeader>
         <ModalBody>
-          <div className="input-container">
+          <div className="input__container">
             <input
-              className="product-input"
+              className="product__input"
               name="product_name"
               type="text"
               placeholder="Enter new product name..."
@@ -106,7 +106,7 @@ function App() {
           </div>
         </ModalBody>
         <ModalFooter>
-          <button className="submit-button" onClick={handleAddProduct}>
+          <button className="submit__button" onClick={handleAddProduct}>
             Submit
           </button>
         </ModalFooter>
