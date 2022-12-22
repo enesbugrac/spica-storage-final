@@ -62,7 +62,7 @@ function App() {
       <ul className="product__list">
         <li
           onClick={(e) => setShowModal(true)}
-          style={{ cursor: "pointer" }}
+          className="card"
           key={"add_product"}
         >
           <big>+ Add New Product</big>
